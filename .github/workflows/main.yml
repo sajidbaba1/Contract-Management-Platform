@@ -1,0 +1,71 @@
+name: Contract Management Platform CI
+
+on:
+  push:
+    branches: [ main, active-feature ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  backend-ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+          
+      - name: Restore dependencies
+        run: dotnet restore backend/ContractManagement.Api/ContractManagement.Api.csproj
+        
+      - name: Build
+        run: dotnet build backend/ContractManagement.Api/ContractManagement.Api.csproj --no-restore
+        
+      - name: Backend Tests
+        run: dotnet test backend/ContractManagement.Tests/ContractManagement.Tests.csproj
+
+  frontend-ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: frontend/package-lock.json
+          
+      - name: Install dependencies
+        run: cd frontend && npm install
+        
+      - name: Lint
+        run: cd frontend && npm run lint
+        
+      - name: Frontend Tests
+        run: cd frontend && npm test -- --passWithNoTests
+
+  merge-to-main:
+    name: Auto-merge to Main
+    needs: [backend-ci, frontend-ci]
+    if: |
+      github.ref == 'refs/heads/active-feature' && 
+      (needs.backend-ci.result == 'success') && 
+      (needs.frontend-ci.result == 'success')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Merge active-feature to main
+        run: |
+          git config --global user.name "sajidbaba1"
+          git config --global user.email "ss2727303@gmail.com"
+          git checkout main
+          git merge active-feature --no-ff -m "Automated merge from active-feature [skip ci]"
+          git push origin main

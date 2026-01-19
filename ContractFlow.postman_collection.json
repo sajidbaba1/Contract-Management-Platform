@@ -1,0 +1,145 @@
+{
+    "info": {
+        "_postman_id": "c6a2b8e3-4f9e-4a6c-9c7d-8e5f1a2b3c4d",
+        "name": "ContractFlow API",
+        "description": "API collection for Contract Management Platform",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "Blueprints",
+            "item": [
+                {
+                    "name": "Get All Blueprints",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/api/blueprints",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "blueprints"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Create Blueprint",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"name\": \"Employment Agreement\",\n  \"description\": \"Standard contract for new hires\",\n  \"fields\": [\n    {\n      \"type\": \"text\",\n      \"label\": \"Employee Name\",\n      \"x\": 0,\n      \"y\": 0\n    },\n    {\n      \"type\": \"date\",\n      \"label\": \"Start Date\",\n      \"x\": 1,\n      \"y\": 0\n    }\n  ]\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/api/blueprints",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "blueprints"
+                            ]
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "Contracts",
+            "item": [
+                {
+                    "name": "Get All Contracts",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/api/contracts",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "contracts"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Create Contract",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"blueprintId\": \"GUID-HERE\",\n  \"name\": \"Agreement with John Doe\",\n  \"fieldData\": {\n    \"Employee Name\": \"John Doe\",\n    \"Start Date\": \"2024-01-20\"\n  }\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/api/contracts",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "contracts"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Transition Lifecycle",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"newStatus\": \"Approved\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/api/contracts/{{id}}/transition",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "contracts",
+                                "{{id}}",
+                                "transition"
+                            ]
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        }
+    ],
+    "variable": [
+        {
+            "key": "base_url",
+            "value": "http://localhost:5140"
+        }
+    ]
+}

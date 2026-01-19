@@ -1,0 +1,45 @@
+# .NET
+[Bb]in/
+[Oo]bj/
+*.user
+*.userosscache
+*.sln.doccache
+*.suo
+*.userprefs
+*.db
+*.testsettings
+.vs/
+.vscode/
+
+# Node.js
+node_modules/
+.next/
+dist/
+build/
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.DS_Store
+*.log
+
+# IDEs
+.idea/
+*.swp
+*.swo
+
+# Project specific
+backend/ContractManagement.Api/bin/
+backend/ContractManagement.Api/obj/
+backend/ContractManagement.Tests/bin/
+backend/ContractManagement.Tests/obj/
+frontend/node_modules/
+frontend/.next/
+
+# Internal documentation (exclude from repo)
+ASSIGNMENT_CHECKLIST.md
+*.checklist.md

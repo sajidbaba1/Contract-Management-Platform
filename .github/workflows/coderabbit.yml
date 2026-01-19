@@ -1,0 +1,27 @@
+name: CodeRabbit
+
+on:
+  pull_request:
+  pull_request_review_comment:
+    types: [created]
+  issue_comment:
+    types: [created]
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    if: |
+      github.event_name == 'pull_request' ||
+      (github.event_name == 'pull_request_review_comment' && github.event.comment.body == '@coderabbitai review') ||
+      (github.event_name == 'issue_comment' && github.event.comment.body == '@coderabbitai review' && github.event.issue.pull_request)
+    steps:
+      - name: CodeRabbit Review
+        uses: coderabbitai/ai-pr-review@latest
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          debug: false
+          role: "Professional Software Engineer"
